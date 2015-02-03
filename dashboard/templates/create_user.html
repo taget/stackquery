@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% from 'common.html' import render_field %}
+
+{% block title %}Stackquery - Create user{% endblock title%}
+
+{% block java_script %}
+
+{% endblock java_script %}
+
+{% block main %}
+<form method="POST" action="{{ url_for('dashboard.dashboard_create_user') }}">
+    	{{ render_field(form.name) }}
+    	{{ render_field(form.user_id) }}
+    	{{ render_field(form.email) }}
+ 	<p><input type="submit" value="Create"></p>
+</form>
+{% endblock main %}

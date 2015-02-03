@@ -1,0 +1,16 @@
+argparse>=1.2
+Flask
+Flask-Login
+Flask-Script
+Flask-SQLAlchemy
+Flask-WTF
+odict>=1.5
+prettytable>=0.7.2
+PyYAML
+requests>=2.4
+requests-futures
+simplejson
+six>=1.7
+
+
+
