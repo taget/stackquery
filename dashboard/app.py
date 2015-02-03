@@ -11,7 +11,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stackquery.db'
     app.secret_key = 'why would I tell you my secret key?'
 
-    #db.init_app(app)
+    # db.init_app(app)
     filters.init_app(app)
     app.register_blueprint(dashboard)
     app.register_blueprint(rest_api)

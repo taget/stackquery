@@ -8,6 +8,7 @@ def format_mark(value):
         marks = value
     return marks
 
+
 def init_app(app):
     """Initialize a Flask application with custom filters."""
     app.jinja_env.filters['format_mark'] = format_mark

@@ -1,5 +1,4 @@
 from flask import Blueprint
-from flask import request
 from flask import jsonify
 
 from database import db_session
@@ -60,7 +59,8 @@ def delete_team(team_id):
     return jsonify({'status': 'OK'})
 
 
-@rest_api.route('/api/teams/<int:team_id>/<int:user_id>/delete', methods=['DELETE'])
+@rest_api.route('/api/teams/<int:team_id>/<int:user_id>/delete',
+                methods=['DELETE'])
 def delete_user_from_team(team_id, user_id):
     team = Team.query.get(team_id)
     user = User.query.get(user_id)

@@ -23,6 +23,7 @@ import dashboard
 
 install_reqs = pip.req.parse_requirements('requirements.txt')
 
+
 class Tox(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -48,19 +49,19 @@ setuptools.setup(
     include_package_data=True,
     platforms='any',
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Environment :: Web',
-        'Intended Audience :: End Users/Web',
-        'License :: OSI Approved :: Apache Software License',
-        'Natural Language :: English',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2'
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Utilities',
-        ],
+                'Development Status :: 4 - Beta',
+                'Environment :: Web',
+                'Intended Audience :: End Users/Web',
+                'License :: OSI Approved :: Apache Software License',
+                'Natural Language :: English',
+                'Operating System :: OS Independent',
+                'Programming Language :: Python',
+                'Programming Language :: Python :: 2'
+                'Programming Language :: Python :: 2.6',
+                'Programming Language :: Python :: 2.7',
+                'Topic :: Internet :: WWW/HTTP',
+                'Topic :: Utilities',
+                ],
     install_requires=[str(x.req) for x in install_reqs],
     tests_require=['tox>=1.6'],  # tox will take care of the other reqs
     cmdclass={'test': Tox},

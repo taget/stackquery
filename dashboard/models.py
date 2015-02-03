@@ -1,11 +1,10 @@
 from collections import OrderedDict
 from datetime import datetime
 
-from sqlalchemy import Boolean, Column
-from sqlalchemy import DateTime, Integer, String, Text, Table
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column
+from sqlalchemy import DateTime, Integer, String, Table
 from sqlalchemy.schema import ForeignKey
-from sqlalchemy.orm import synonym, relationship
+from sqlalchemy.orm import relationship
 
 from database import Base
 

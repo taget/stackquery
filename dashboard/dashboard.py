@@ -1,8 +1,8 @@
+from flask import abort
 from flask import Blueprint
 from flask import redirect
 from flask import render_template
 from flask import request
-from flask import flash
 from flask import url_for
 
 import stackquery.common as common
@@ -15,6 +15,7 @@ from forms import TeamForm
 dashboard = Blueprint('dashboard', __name__)
 
 # Index
+
 
 @dashboard.route('/', methods=['GET', 'POST'])
 def dashboard_index():
@@ -30,12 +31,13 @@ def dashboard_index():
                                              'Red Hat',
                                              project_type, release)
         return render_template('index.html', users=users, metric=metric,
-                                release=release, team_id=team_id,
-                                project_type=project_type)
+                               release=release, team_id=team_id,
+                               project_type=project_type)
     else:
         return render_template('index.html')
 
 # Teams
+
 
 @dashboard.route('/teams/')
 def dashboard_teams():
@@ -86,6 +88,7 @@ def dashboard_create_team():
 
 # Users
 
+
 @dashboard.route('/users/', methods=['GET', 'POST'])
 def dashboard_users():
     if request.method == 'POST':
@@ -97,6 +100,7 @@ def dashboard_users():
 
     users = User.query.all()
     return render_template('list_users.html', users=users)
+
 
 @dashboard.route('/users/create/', methods=['GET', 'POST'])
 def dashboard_create_user():
