@@ -5,7 +5,6 @@ from flask import render_template
 from flask import request
 from flask import url_for
 
-import stackquery.common as common
 from database import db_session
 from models import Team
 from models import User
