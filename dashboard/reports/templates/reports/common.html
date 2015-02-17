@@ -1,0 +1,13 @@
+{% macro detail_report(report) %}
+<tr>
+    <td>{{ report.id }}</td>
+    <td>{{ report.name }}</td>
+    <td>{{ report.description }}</td>
+    <td>{{ report.url | format_url}}</td>
+    <td user-id="{{ report.id }}">
+        <a class="report-delete-link" href="#" data-delete-url="{{ url_for('report_rest_api.delete_report', report_id=report.id) }}">
+            <i class="icon-trash"></i>
+        </a>
+    </td>
+</tr>
+{% endmacro %}
