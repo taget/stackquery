@@ -1,5 +1,5 @@
 def format_mark(value):
-    if type(value) == type(dict()):
+    if value is isinstance(dict):
         marks = ''
         for key in value:
             marks += "%s: %s\n" % (key, value[key])
