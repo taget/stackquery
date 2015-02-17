@@ -1,8 +1,8 @@
 from collections import OrderedDict
 from datetime import datetime
 
-from sqlalchemy import Column
-from sqlalchemy import DateTime, Integer, String, Table
+from sqlalchemy import Boolean, Column
+from sqlalchemy import DateTime, Integer, String, Table, Text
 from sqlalchemy.schema import ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -59,3 +59,16 @@ class User(Base, DictSerializable):
     name = Column('name', String(200))
     email = Column('email', String(100))
     user_id = Column('user_id', String(20))
+
+
+class CustomReport(Base, DictSerializable):
+    '''Custom report representation in database'''
+    __tablename__ = 'custom_report'
+    id = Column(Integer, primary_key=True)
+    created = Column(DateTime, default=datetime.now)
+    modified = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    name = Column('name', String(200))
+    url = Column('url', Text)
+    require_authentication = Column(Boolean, default=False)
+    user = Column('user', String(35))
+    password = Column('password', String(35))
