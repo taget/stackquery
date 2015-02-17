@@ -10,6 +10,7 @@ from models import Team
 from models import User
 from forms import UserForm
 from forms import TeamForm
+import stackalytics
 
 dashboard = Blueprint('dashboard', __name__)
 
@@ -26,9 +27,9 @@ def dashboard_index():
         team_id = request.form.get('team')
         team = Team.query.get(team_id)
         list_users = [user.user_id for user in team.users]
-        users = common.get_status_from_users(list_users,
-                                             'Red Hat',
-                                             project_type, release)
+        users = stackalytics.get_status_from_users(list_users,
+                                                   'Red Hat',
+                                                   project_type, release)
         return render_template('index.html', users=users, metric=metric,
                                release=release, team_id=team_id,
                                project_type=project_type)

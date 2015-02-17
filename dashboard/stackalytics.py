@@ -59,3 +59,26 @@ def get_registered_users(user_ids):
         else:
             LOG.warning("User_id '%s' is not registered in Launchpad", user)
     return result
+
+
+def get_status_from_users(users, company, project_type,
+                          release, module=None):
+    """Return list of users from stackalytics"""
+    parameters = {
+        'project_type': project_type,
+        'company': company,
+        'metric': 'commits',
+        'release': release
+    }
+
+    user_list = []
+    if module:
+        parameters['module'] = module
+    for user in users:
+        parameters['user_id'] = user
+        user_info = get_stats(parameters)
+        if user_info:
+            user_info['contribution']['user'] = user
+            user_list.append(user_info['contribution'])
+
+    return user_list
