@@ -19,7 +19,8 @@ def get_reports():
     return json.dumps(list(releases), default=date_handler)
 
 
-@report_rest_api.route('/api/report/<int:report_id>/delete')
+@report_rest_api.route('/api/report/<int:report_id>/delete',
+                       methods=['DELETE'])
 def delete_report(report_id):
     report = CustomReport.query.get(report_id)
     if report is None:
