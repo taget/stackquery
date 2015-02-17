@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import jsonify
 
 from database import db_session
-from forms import CustomReport
+from models import CustomReport
 
 import simplejson as json
 
