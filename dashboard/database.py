@@ -99,3 +99,17 @@ def init_db():
     team.users.append(user2)
     db_session.add(team)
     db_session.commit()
+
+    report = models.CustomReport()
+    report.name = 'Test'
+    report.description = 'Test description'
+    report.url = 'http://www.redhat.com'
+    db_session.add(report)
+
+    report = models.CustomReport()
+    report.name = 'Test'
+    report.description = 'Test description'
+    report.url = ('http://www.thisisaverybigurl.com/?withalotofinformation'
+                  'topassthroughblablablaaasfasfdasfdasfasfdasdfasdfasdfasdf')
+    db_session.add(report)
+    db_session.commit()
