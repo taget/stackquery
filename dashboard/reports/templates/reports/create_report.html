@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% from 'common.html' import render_field %}
+
+{% block title %}Stackquery - Create report{% endblock title%}
+
+{% block java_script %}
+
+{% endblock java_script %}
+
+{% block main %}
+<form method="POST" action="{{ url_for('custom_report.create_report') }}">
+        {{ render_field(form.name) }}
+        {{ render_field(form.url) }}
+        {{ render_field(form.description, rows=10, cols=100) }}
+    <p><input type="submit" value="Create"></p>
+</form>
+{% endblock main %}
