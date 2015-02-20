@@ -11,3 +11,20 @@
     </td>
 </tr>
 {% endmacro %}
+
+{% macro table_report(reports) %}
+    {% for report in reports %}
+    <h4 class="text-center"> {{ report[0] | filter_table_header }}</h4>
+    <table class="table table-striped table-hover">
+        {% for row in report %}
+            {% set splited_row = row |split_string %}
+            <tr>
+            {% for column in splited_row %}
+                <td> {{ column }} </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    </br>
+    {% endfor %}
+{% endmacro %}

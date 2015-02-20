@@ -70,6 +70,4 @@ class CustomReport(Base, DictSerializable):
     name = Column('name', String(200))
     url = Column('url', Text)
     require_authentication = Column(Boolean, default=False)
-    user = Column('user', String(35))
-    password = Column('password', String(35))
     description = Column('description', Text)
