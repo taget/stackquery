@@ -32,18 +32,13 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url_for('dashboard.dashboard_index')}}">Default report</a></li>
                             <li class="divider"></li>
-                            <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Custom reports</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ url_for('custom_report.create_report') }}">Create custom report</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="{{ url_for('custom_report.custom_report_index') }}">List reports</a></li>
-                                    <li class="divider"></li>
-                                    {% set custom_reports = get_custom_reports() %}
-                                    {% for custom_report in custom_reports %}
-                                        <li><a href="{{ url_for('custom_report.show_report', report_id=custom_report.id) }}">{{ custom_report.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
+                            <li><a href="{{ url_for('custom_report.create_report') }}">Create Red Hat Bugzilla report</a></li>
+                            <li><a href="{{ url_for('custom_report.custom_report_index') }}">List all Red Hat Bugzilla reports</a></li>
+                            <li class="divider"></li>
+                            {% set custom_reports = get_custom_reports() %}
+                            {% for custom_report in custom_reports %}
+                                <li><a href="{{ url_for('custom_report.show_report', report_id=custom_report.id) }}">{{ custom_report.name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
 					<li class="dropdown">
