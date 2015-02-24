@@ -15,10 +15,13 @@ def format_mark(value):
 
 
 def filter_table_header(value):
-    output = re.search('^"[^"]+":\s*"([^"]+)"', value)
-    output = output.groups()[0]
-    output = output.replace("-", "")
-    return output[0].upper() + output[1:]
+    output = re.search('^"[^"]+":\s"?([^"]*)"?"[^"]*/[^"]*"', value)
+    if output > 0:
+        output = output.groups()[0]
+        output = output.replace("-", "")
+        return output[0].upper() + output[1:]
+
+    return value.split(',')[0].replace('"', '')
 
 
 def format_url(value):
