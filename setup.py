@@ -14,14 +14,19 @@
 # limitations under the License.
 
 from __future__ import absolute_import, print_function
+import os
 import sys
 import setuptools
+import uuid
 import pip.req
 from setuptools.command.test import test as TestCommand
 
 import dashboard
 
-install_reqs = pip.req.parse_requirements('requirements.txt')
+#install_reqs = pip.req.parse_requirements('requirements.txt')
+install_reqs = pip.req.parse_requirements(os.path.join(os.path.dirname(__file__),
+                                          "requirements.txt"), None,
+                                          None, None, uuid.uuid1())
 
 
 class Tox(TestCommand):
