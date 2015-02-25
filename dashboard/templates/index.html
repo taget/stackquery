@@ -28,9 +28,12 @@
 $(document).ready(function(){
     $("#release").load(loadComboBox("#release", "{{ url_for('rest_api.get_releases') }}", {}, 'name', 'name'));
     $("#team").load(loadComboBox("#team", "{{ url_for('rest_api.get_teams') }}", {}, 'id', 'name'));
+    $("#end_date").val("{{end_date}}");
+    $("#start_date").val("{{start_date}}");
     {% if users %}
     $("#project_type option[value='{{ project_type }}2']").prop('selected', true);
     $("#type option[value='{{ metric }}']").prop('selected', true);
+
     $("#release option[value='{{ release }}']").prop('selected', true);
     $("#team option[value='{{ team_id }}']").prop('selected', true);
     {% endif %}
@@ -48,6 +51,14 @@ $(document).ready(function(){
             <label for="release">Release:</label>
             <select class="form-control" name="release" id="release">
             </select>
+        </div>
+        <div class="span3">
+            <label for="start_date">Start:</label>
+            <input type="date" name="start_date" id="start_date"/>
+        </div>
+        <div class="span3">
+            <label for="end_date">End:</label>
+            <input type="date" name="end_date" id="end_date"/>
         </div>
         <div class="span3">
             <label for="project_type">Project type:</label>
@@ -70,6 +81,7 @@ $(document).ready(function(){
             </select>
         </div>
         <div class="span3">
+            <br>
             <button type="submit" class="btn btn-primary">Go</button>
         </div>
     </div>

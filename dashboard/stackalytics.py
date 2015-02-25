@@ -17,12 +17,19 @@ import requests
 import requests_futures.sessions
 import logging
 
+# fix me
+import datetime
+import time
 
 LOG = logging.getLogger('stackquery')
 
 
 STACKALYTICS_URL = 'http://stackalytics.com/'
 
+def date_time_to_utc_str(str_date):
+    """covert a string time to a string utc time"""
+    date_time = datetime.datetime.strptime(str_date, '%Y-%m-%d')
+    return str(int(time.mktime(date_time.timetuple())))
 
 def get_stats(params):
     """Query Stackalytics 'contribution' module with `params`.
@@ -62,7 +69,7 @@ def get_registered_users(user_ids):
 
 
 def get_status_from_users(users, company, project_type,
-                          release, module=None):
+                          release, module=None, start_date="", end_date=""):
     """Return list of users from stackalytics"""
     parameters = {
         'project_type': project_type,
@@ -70,6 +77,11 @@ def get_status_from_users(users, company, project_type,
         'metric': 'commits',
         'release': release
     }
+    if len(start_date) > 0:
+       parameters['start_date'] = date_time_to_utc_str(start_date)
+
+    if len(end_date) > 0:
+       parameters['end_date'] = date_time_to_utc_str(end_date)
 
     user_list = []
     if module:

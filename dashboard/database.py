@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
+
 engine = create_engine('sqlite:///dashboard.db', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
@@ -10,8 +11,75 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 
+
+# team information
+teams = {}
+
+def read_config(conf_file='./usr.list'):
+    with open(conf_file) as f:
+        team_name = ''
+        for s in f.readlines():
+            s = s.strip('\n')
+            if s.startswith('['):
+                s = s.strip('[')
+                s = s.strip(']')
+                teams.update({s: []})
+                team_name = s
+            else:
+                if len(team_name) < 1:
+                    raise
+                if s:
+                    teams[team_name].append(s)
+
+
+# Populating user from config
+def populat_user_from_config():
+    '''
+        return a list of Team users
+    '''
+    import models
+
+    model_users = []
+    for t in teams:
+        for u in teams[t]:
+            u.strip()
+            user = models.User()
+            user.name = u.split(':')[0].strip()
+            user.user_id = u.split(':')[1].strip()
+            user.email = 'fake@test.com'
+            model_users.append(user)
+
+    return model_users
+
+# Populating team from config
+def populat_team_from_config():
+    '''
+        return a list of Team modle
+    '''
+    import models
+
+    model_teams = []
+    for t in teams:
+        model_t = models.Team()
+        model_t.name = t
+        for u in teams[t]:
+            u.strip()
+            user = models.User()
+            user.name = u.split(':')[0].strip()
+            user.user_id = u.split(':')[1].strip()
+            user.email = 'fake@test.com'
+            model_t.users.append(user)
+
+        model_teams.append(model_t)
+
+    return model_teams
+
+
+
 def init_db():
     import models
+    # read config for user informations
+    read_config()
 
     # Creating tables
     Base.metadata.create_all(bind=engine)
@@ -67,49 +135,30 @@ def init_db():
     db_session.commit()
 
     # Populating User table
-    user1 = models.User()
-    user1.name = 'Arx Cruz'
-    user1.email = 'arxcruz@test.com'
-    user1.user_id = 'arxcruz'
-    db_session.add(user1)
+    for usr in populat_user_from_config():
+        db_session.add(usr)
 
-    user2 = models.User()
-    user2.name = 'David Kranz'
-    user2.email = 'david@test.com'
-    user2.user_id = 'david-kranz'
-    db_session.add(user2)
-
-    user3 = models.User()
-    user3.name = 'Arx Cruz Delete'
-    user3.email = 'arxcruz@test.com'
-    user3.user_id = 'arxcruz'
-    db_session.add(user3)
     db_session.commit()
 
     # Populating team
-    team = models.Team()
-    team.name = 'Demo team 1'
-    team.users.append(user1)
-    team.users.append(user2)
-    db_session.add(team)
+    for team in populat_team_from_config():
+        db_session.add(team)
 
-    team = models.Team()
-    team.name = 'Demo team 2'
-    team.users.append(user1)
-    team.users.append(user2)
-    db_session.add(team)
     db_session.commit()
 
     report = models.CustomReport()
     report.name = 'Test'
     report.description = 'Test description'
-    report.url = 'http://www.redhat.com'
+    report.url = 'bla'
     db_session.add(report)
 
     report = models.CustomReport()
     report.name = 'Test'
     report.description = 'Test description'
-    report.url = ('http://www.thisisaverybigurl.com/?withalotofinformation'
-                  'topassthroughblablablaaasfasfdasfdasfasfdasdfasdfasdfasdf')
+    report.url = ('bla')
     db_session.add(report)
     db_session.commit()
+
+if __name__ == "__main__":
+    read_config()
+    print populat_user_from_config()

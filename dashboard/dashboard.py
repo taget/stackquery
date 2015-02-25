@@ -23,15 +23,18 @@ def dashboard_index():
         release = request.form.get('release')
         project_type = request.form.get('project_type')
         metric = True if request.form.get('type') == 'metric' else False
-
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
         team_id = request.form.get('team')
         team = Team.query.get(team_id)
         list_users = [user.user_id for user in team.users]
-        users = stackalytics.get_status_from_users(list_users,
-                                                   'Red Hat',
-                                                   project_type, release)
+
+        users = stackalytics.get_status_from_users(
+             list_users, 'Intel', project_type, release, start_date=start_date, end_date=end_date)
+
         return render_template('index.html', users=users, metric=metric,
                                release=release, team_id=team_id,
+                               start_date=start_date, end_date=end_date,
                                project_type=project_type)
     else:
         return render_template('index.html')
