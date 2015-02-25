@@ -22,7 +22,8 @@ def dashboard_index():
     if request.method == 'POST':
         release = request.form.get('release')
         project_type = request.form.get('project_type')
-        metric = True if request.form.get('type') == 'metric' else False
+        #metric = True if request.form.get('type') == 'metric' else False
+        metric = request.form.get('type')
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
         team_id = request.form.get('team')
@@ -37,7 +38,6 @@ def dashboard_index():
                 if u["user"] == usr.user_id:
                     u['name'] = usr.name
                     break
-
         return render_template('index.html', users=users, metric=metric,
                                release=release, team_id=team_id,
                                start_date=start_date, end_date=end_date,

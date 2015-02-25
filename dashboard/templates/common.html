@@ -1,5 +1,5 @@
 {% macro list_users(users, metric, release) %}
-{% if metric %}
+{% if metric ==  "metric" %}
 
     {% set drafted_blueprint_count = users|sum(attribute='drafted_blueprint_count') %}
     {% set completed_blueprint_count = users|sum(attribute='completed_blueprint_count') %}
@@ -37,7 +37,7 @@
         </tr>
     </tbody>
 </table>
-    {% else %}
+{% else %}
 <div class="row">
     <h4>Results for release {{ release }}</h2>
 </div>
