@@ -31,6 +31,12 @@ def dashboard_index():
 
         users = stackalytics.get_status_from_users(
              list_users, 'Intel', project_type, release, start_date=start_date, end_date=end_date)
+        # stackalytics dont return user name
+        for u in users:
+            for usr in team.users:
+                if u["user"] == usr.user_id:
+                    u['name'] = usr.name
+                    break
 
         return render_template('index.html', users=users, metric=metric,
                                release=release, team_id=team_id,

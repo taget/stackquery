@@ -60,6 +60,7 @@
     <tbody>
     {% for user in users %}
         {% set user_id = user.get('user') %}
+        {% set user_name = user.get('name') %}
         {% set commit_count = user.get('commit_count') %}
         {% set loc = user.get('loc') %}
         {% set change_request_count = user.get('change_request_count') %}
@@ -71,7 +72,7 @@
         {% set resolved_bug_count = user.get('resolved_bug_count') %}
         {% set email_count = user.get('email_count') %}
         <tr>
-            <td><a href="http://stackalytics.com/?user_id={{ user_id }}&amp;release=all">{{ user_id }}</a></td>
+            <td><a href="http://stackalytics.com/?user_id={{ user_id }}&amp;release=all">{{ user_name }}</a></td>
             <td>{{ commit_count }}</td>
             <td>{{ loc }}</td>
             <td>{{ change_request_count }}</td>
