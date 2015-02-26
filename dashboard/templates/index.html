@@ -31,6 +31,7 @@ $(document).ready(function(){
     $("#end_date").val("{{end_date}}");
     $("#start_date").val("{{start_date}}");
     $("#team").val("{{team_id}}")
+    $("#module").val("{{module}}")
     $("#project_type").val("{{ project_type }}")
     $("#type").val("{{ metric }}")
     $("#release").val("{{ release }}")
@@ -66,8 +67,17 @@ $(document).ready(function(){
             </select>
         </div>
         <div class="span3">
+            <label for="project_type">Project Module:</label>
+            <select class="form-control" name="module" id="module">
+                <option value="all">All</option>
+                <option value="nova">Nova</option>
+                <option value="neutron">Neutron</option>
+            </select>
+        </div>
+        <div class="span3">
             <label for="type">Type:</label>
             <select class="form-control" name="type" id="type">
+                <option value="all">All</option>
                 <option value="metric">Metrics</option>
                 <option value="group">Group Summary</option>
             </select>

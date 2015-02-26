@@ -22,16 +22,18 @@ def dashboard_index():
     if request.method == 'POST':
         release = request.form.get('release')
         project_type = request.form.get('project_type')
-        #metric = True if request.form.get('type') == 'metric' else False
         metric = request.form.get('type')
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
         team_id = request.form.get('team')
+        module = request.form.get('module', 'All')
+        # we pass to stackalytics None
+        pass_module = None if module == 'all' else module
         team = Team.query.get(team_id)
         list_users = [user.user_id for user in team.users]
 
         users = stackalytics.get_status_from_users(
-             list_users, 'Intel', project_type, release, start_date=start_date, end_date=end_date)
+             list_users, 'Intel', project_type, release, module=pass_module, start_date=start_date, end_date=end_date)
         # stackalytics dont return user name
         for u in users:
             for usr in team.users:
@@ -40,6 +42,7 @@ def dashboard_index():
                     break
         return render_template('index.html', users=users, metric=metric,
                                release=release, team_id=team_id,
+                               module=module,
                                start_date=start_date, end_date=end_date,
                                project_type=project_type)
     else:
