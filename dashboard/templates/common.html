@@ -37,7 +37,9 @@
         </tr>
     </tbody>
 </table>
-{% else %}
+{% endif %}
+
+{% if metric ==  "group" %}
 <div class="row">
     <h4>Results for release {{ release }}</h2>
 </div>
@@ -88,6 +90,45 @@
     </tbody>
 </table>
 {% endif %}
+
+{% if metric ==  "all" %}
+<div class="row">
+    <h4>Results for release {{ release }}</h2>
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <td>Group</td>
+            <td>Total commits</td>
+            <td>Total LOC</td>
+            <td>Draft Blueprints</td>
+            <td>Completed Blueprints</td>
+            <td>Resolved Bugs</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        {% set user_id = user.get('user') %}
+        {% set user_name = user.get('name') %}
+        {% set commit_count = user.get('commit_count') %}
+        {% set loc = user.get('loc') %}
+        {% set drafted_blueprint_count = user.get('drafted_blueprint_count') %}
+        {% set completed_blueprint_count = user.get('completed_blueprint_count') %}
+        {% set resolved_bug_count = user.get('resolved_bug_count') %}
+        <tr>
+            <td>{{ user_name }}</td>
+            <td>{{ commit_count }}</td>
+            <td>{{ loc }}</td>
+            <td>{{ drafted_blueprint_count }}</td>
+            <td>{{ completed_blueprint_count }}</td>
+            <td>{{ resolved_bug_count }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
 {% endmacro %}
 
 {% macro detail_team(team) %}

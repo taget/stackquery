@@ -86,8 +86,11 @@ def get_status_from_users(users, company, project_type,
     user_list = []
     if module:
         parameters['module'] = module
+
     for user in users:
-        parameters['user_id'] = user
+        # handle fake user (like user = intel, means all company)
+        if not user == 'intel':
+            parameters['user_id'] = user
         user_info = get_stats(parameters)
         if user_info:
             user_info['contribution']['user'] = user

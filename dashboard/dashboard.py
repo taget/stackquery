@@ -14,8 +14,20 @@ import stackalytics
 
 dashboard = Blueprint('dashboard', __name__)
 
-# Index
 
+colums = ('commit_count', 'resolved_bug_count',
+          'drafted_blueprint_count, completed_blueprint_count', 'loc')
+
+def fake_user(name):
+# return a fake_user for count sum
+    user = dict(user=0,
+                name=name)
+    for c in colums:
+        user.update({c: 0})
+
+    return user
+
+# Index
 
 @dashboard.route('/', methods=['GET', 'POST'])
 def dashboard_index():
@@ -29,18 +41,45 @@ def dashboard_index():
         module = request.form.get('module', 'All')
         # we pass to stackalytics None
         pass_module = None if module == 'all' else module
-        team = Team.query.get(team_id)
-        list_users = [user.user_id for user in team.users]
 
-        users = stackalytics.get_status_from_users(
-             list_users, 'Intel', project_type, release, module=pass_module, start_date=start_date, end_date=end_date)
-        # stackalytics dont return user name
-        for u in users:
-            for usr in team.users:
-                if u["user"] == usr.user_id:
-                    u['name'] = usr.name
-                    break
-        return render_template('index.html', users=users, metric=metric,
+        if metric == 'all':
+            ret_users = []
+            #query all teams
+            teams = Team.query.all()
+            for team in teams:
+                team_user = fake_user(team.name)
+                list_users = [user.user_id for user in team.users]
+                # add a fake user_id to query list
+                users = stackalytics.get_status_from_users(
+                        list_users, 'Intel', project_type,
+                        release, module=pass_module,
+                        start_date=start_date, end_date=end_date)
+                # compute sum
+                for user in users:
+                    for c in colums:
+                        team_user[c] += user.get(c, 0)
+                ret_users.append(team_user)
+
+            #query intel
+            users = stackalytics.get_status_from_users(
+                    ['intel'], 'Intel', project_type,
+                    release, module=pass_module,
+                    start_date=start_date, end_date=end_date)
+            ret_users.append(users[0])
+
+        else:
+            team = Team.query.get(team_id)
+            list_users = [user.user_id for user in team.users]
+            ret_users = stackalytics.get_status_from_users(
+                list_users, 'Intel', project_type, release,
+                module=pass_module, start_date=start_date, end_date=end_date)
+            # stackalytics dont return user name
+            for u in ret_users:
+                for usr in team.users:
+                    if u["user"] == usr.user_id:
+                        u['name'] = usr.name
+                        break
+        return render_template('index.html', users=ret_users, metric=metric,
                                release=release, team_id=team_id,
                                module=module,
                                start_date=start_date, end_date=end_date,
