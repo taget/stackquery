@@ -91,7 +91,11 @@ def get_status_from_users(users, company, project_type,
         # handle fake user (like user = intel, means all company)
         if not user == 'intel':
             parameters['user_id'] = user
-        user_info = get_stats(parameters)
+        try:
+            user_info = get_stats(parameters)
+        except:
+            user_info = None
+
         if user_info:
             user_info['contribution']['user'] = user
             user_list.append(user_info['contribution'])

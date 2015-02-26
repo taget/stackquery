@@ -65,7 +65,9 @@ def dashboard_index():
                     ['intel'], 'Intel', project_type,
                     release, module=pass_module,
                     start_date=start_date, end_date=end_date)
-            ret_users.append(users[0])
+            if len(users) > 0:
+                users[0]['name'] = "Intel"
+                ret_users.append(users[0])
 
         else:
             team = Team.query.get(team_id)

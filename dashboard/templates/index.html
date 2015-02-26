@@ -13,6 +13,7 @@
          url: url,
          data: data,
          dataType: "json",
+         async: false,
          success: function(json){
             var options = "";
             $.each(json, function(key, value){
@@ -31,11 +32,11 @@ $(document).ready(function(){
     $("#end_date").val("{{end_date}}");
     $("#start_date").val("{{start_date}}");
     {% if users %}
-        $("#team").val("{{team_id}}")
-        $("#module").val("{{module}}")
-        $("#project_type").val("{{ project_type }}")
-        $("#type").val("{{ metric }}")
-        $("#release").val("{{ release }}")
+    $("#team").val("{{team_id}}")
+    $("#module").val("{{module}}")
+    $("#project_type").val("{{ project_type }}")
+    $("#type").val("{{ metric }}")
+    $("#release").val("{{ release }}")
     {% endif %}
 });
 
