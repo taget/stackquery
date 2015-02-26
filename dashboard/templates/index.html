@@ -30,11 +30,13 @@ $(document).ready(function(){
     $("#team").load(loadComboBox("#team", "{{ url_for('rest_api.get_teams') }}", {}, 'id', 'name'));
     $("#end_date").val("{{end_date}}");
     $("#start_date").val("{{start_date}}");
-    $("#team").val("{{team_id}}")
-    $("#module").val("{{module}}")
-    $("#project_type").val("{{ project_type }}")
-    $("#type").val("{{ metric }}")
-    $("#release").val("{{ release }}")
+    {% if users %}
+        $("#team").val("{{team_id}}")
+        $("#module").val("{{module}}")
+        $("#project_type").val("{{ project_type }}")
+        $("#type").val("{{ metric }}")
+        $("#release").val("{{ release }}")
+    {% endif %}
 });
 
 </script>
