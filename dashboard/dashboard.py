@@ -16,7 +16,7 @@ dashboard = Blueprint('dashboard', __name__)
 
 
 colums = ('commit_count', 'resolved_bug_count',
-          'drafted_blueprint_count, completed_blueprint_count', 'loc')
+          'drafted_blueprint_count', 'completed_blueprint_count', 'loc')
 
 def fake_user(name):
 # return a fake_user for count sum
