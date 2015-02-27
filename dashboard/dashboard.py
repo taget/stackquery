@@ -38,7 +38,7 @@ def dashboard_index():
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
         team_id = request.form.get('team')
-        module = request.form.get('module', 'All')
+        module = request.form.get('module', 'all')
         # we pass to stackalytics None
         pass_module = None if module == 'all' else module
 
