@@ -42,7 +42,7 @@ def dashboard_index():
         # we pass to stackalytics None
         pass_module = None if module == 'all' else module
 
-        if metric == 'all':
+        if team_id == "1":
             ret_users = []
             #query all teams
             teams = Team.query.all()
@@ -60,15 +60,6 @@ def dashboard_index():
                         team_user[c] += user.get(c, 0)
                 ret_users.append(team_user)
 
-            #query intel
-            users = stackalytics.get_status_from_users(
-                    ['intel'], 'Intel', project_type,
-                    release, module=pass_module,
-                    start_date=start_date, end_date=end_date)
-            if len(users) > 0:
-                users[0]['name'] = "Intel"
-                ret_users.append(users[0])
-
         else:
             team = Team.query.get(team_id)
             list_users = [user.user_id for user in team.users]
@@ -81,6 +72,8 @@ def dashboard_index():
                     if u["user"] == usr.user_id:
                         u['name'] = usr.name
                         break
+            # sort by commit_count
+            ret_users.sort(key=lambda x:x['commit_count'], reverse=True)
         return render_template('index.html', users=ret_users, metric=metric,
                                release=release, team_id=team_id,
                                module=module,

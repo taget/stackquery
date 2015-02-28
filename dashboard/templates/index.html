@@ -86,7 +86,6 @@ $(document).ready(function(){
         <div class="span3">
             <label for="type">Query type:</label>
             <select class="form-control" name="type" id="type">
-                <option value="all">All</option>
                 <option value="metric">Metrics</option>
                 <option value="group">Group Summary</option>
             </select>
@@ -105,7 +104,7 @@ $(document).ready(function(){
 
 {% if users %}
 <div>
-{{ list_users(users, metric, release) }}
+{{ list_users(users, metric, release, team_id) }}
 </div>
 {% endif %}
 {% endblock main %}

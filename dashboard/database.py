@@ -140,17 +140,23 @@ def init_db():
 
     db_session.commit()
 
-    # Populating team
+    # fake team intel
+    team_intel = models.Team()
+    team_intel.name = 'Intel'
+    user = models.User()
+    user.name = 'intel'
+    user.user_id = 'intel'
+    user.email = 'intel@intel.com'
+    team_intel.users.append(user)
+
+    db_session.add(team_intel)
+    db_session.commit()
+
+    # Populating team from config
     for team in populat_team_from_config():
         db_session.add(team)
 
     db_session.commit()
-
-    report = models.CustomReport()
-    report.name = 'Test'
-    report.description = 'Test description'
-    report.url = 'bla'
-    db_session.add(report)
 
     report = models.CustomReport()
     report.name = 'Test'
@@ -162,3 +168,4 @@ def init_db():
 if __name__ == "__main__":
     read_config()
     print populat_user_from_config()
+    print populat_team_from_config()

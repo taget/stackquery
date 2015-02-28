@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import, print_function, unicode_literals
+#from __future__ import absolute_import, print_function, unicode_literals
+from __future__ import absolute_import,  unicode_literals
 import requests
 import requests_futures.sessions
 import logging
@@ -42,7 +43,10 @@ def get_stats(params):
     LOG.info("Using parameters: %s", params)
     r = requests.get(STACKALYTICS_URL + MODULE, params=params)
     LOG.info(r.url)
-    r.raise_for_status()
+    try:
+        r.raise_for_status()
+    except:
+        raise
     return r.json()
 
 
@@ -97,7 +101,9 @@ def get_status_from_users(users, company, project_type,
             try:
                 user_info = get_stats(parameters)
             except:
-                user_info = None
+                print user
+                print "error" * 10
+                break
 
         if user_info:
             user_info['contribution']['user'] = user
