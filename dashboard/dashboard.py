@@ -15,8 +15,10 @@ import stackalytics
 dashboard = Blueprint('dashboard', __name__)
 
 
-colums = ('commit_count', 'resolved_bug_count',
+colums = ('commit_count', 'resolved_bug_count', 'reviews',
           'drafted_blueprint_count', 'completed_blueprint_count', 'loc')
+
+marks_name = ('A', '-2', '1', '0', '2','-1')
 
 def fake_user(name):
 # return a fake_user for count sum
@@ -26,6 +28,12 @@ def fake_user(name):
         user.update({c: 0})
 
     return user
+
+def comput_user_reviews(user):
+    # compute review counts
+    user['reviews'] = 0
+    for mark in marks_name:
+        user['reviews'] += user['marks'][mark]
 
 # Index
 
@@ -54,8 +62,10 @@ def dashboard_index():
                         list_users, 'Intel', project_type,
                         release, module=pass_module,
                         start_date=start_date, end_date=end_date)
-                # compute sum
+                # compute sum for a team
                 for user in users:
+                    # compute review counts
+                    comput_user_reviews(user)
                     for c in colums:
                         team_user[c] += user.get(c, 0)
                 ret_users.append(team_user)
@@ -68,12 +78,14 @@ def dashboard_index():
                 module=pass_module, start_date=start_date, end_date=end_date)
             # stackalytics dont return user name
             for u in ret_users:
+                comput_user_reviews(u)
                 for usr in team.users:
                     if u["user"] == usr.user_id:
                         u['name'] = usr.name
                         break
-            # sort by commit_count
-            ret_users.sort(key=lambda x:x['commit_count'], reverse=True)
+
+        # sort by commit_count
+        ret_users.sort(key=lambda x:x['commit_count'], reverse=True)
         return render_template('index.html', users=ret_users, metric=metric,
                                release=release, team_id=team_id,
                                module=module,

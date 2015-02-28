@@ -8,6 +8,7 @@
         <tr>
             <td>Group</td>
             <td>Total commits</td>
+            <td>Total reviews</td>
             <td>Total LOC</td>
             <td>Draft Blueprints</td>
             <td>Completed Blueprints</td>
@@ -19,6 +20,7 @@
         {% set user_id = user.get('user') %}
         {% set user_name = user.get('name') %}
         {% set commit_count = user.get('commit_count') %}
+        {% set reviews = user.get('reviews') %}
         {% set loc = user.get('loc') %}
         {% set drafted_blueprint_count = user.get('drafted_blueprint_count') %}
         {% set completed_blueprint_count = user.get('completed_blueprint_count') %}
@@ -26,6 +28,7 @@
         <tr>
             <td>{{ user_name }}</td>
             <td>{{ commit_count }}</td>
+            <td>{{ reviews }}</td>
             <td>{{ loc }}</td>
             <td>{{ drafted_blueprint_count }}</td>
             <td>{{ completed_blueprint_count }}</td>
@@ -43,7 +46,9 @@
         {% set completed_blueprint_count = users|sum(attribute='completed_blueprint_count') %}
         {% set filed_bug_count = users|sum(attribute='filed_bug_count') %}
         {% set resolved_bug_count = users|sum(attribute='resolved_bug_count') %}
-        {% set total = [drafted_blueprint_count, completed_blueprint_count, filed_bug_count, resolved_bug_count] |sum() %}
+        {% set reviews = users|sum(attribute='reviews') %}
+        {% set commit_count = users|sum(attribute='commit_count') %}
+        {% set total = [drafted_blueprint_count, completed_blueprint_count, filed_bug_count, resolved_bug_count, reviews, commit_count] |sum() %}
 
 <table class="table table-striped table-hover">
     <thead>
@@ -53,6 +58,14 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>Commits</td>
+            <td>{{ commit_count }}</td>
+        </tr>
+        <tr>
+            <td>Reviews</td>
+            <td>{{ reviews }}</td>
+        </tr>
         <tr>
             <td>Drafted blueprints</td>
             <td>{{ drafted_blueprint_count }}</td>
@@ -85,7 +98,7 @@
             <td>User</td>
             <td>Total commits</td>
             <td>Total LOC</td>
-            <td>Change Requests</td>
+            <td>Total Reviews</td>
             <td>Patch Sets</td>
             <td>Marks</td>
             <td>Draft Blueprints</td>
@@ -102,6 +115,7 @@
         {% set commit_count = user.get('commit_count') %}
         {% set loc = user.get('loc') %}
         {% set change_request_count = user.get('change_request_count') %}
+        {% set reviews = user.get('reviews') %}
         {% set patch_set_count = user.get('patch_set_count') %}
         {% set marks = user.get('marks') %}
         {% set drafted_blueprint_count = user.get('drafted_blueprint_count') %}
@@ -113,7 +127,7 @@
             <td><a href="http://stackalytics.com/?user_id={{ user_id }}&amp;release=all">{{ user_name }}</a></td>
             <td>{{ commit_count }}</td>
             <td>{{ loc }}</td>
-            <td>{{ change_request_count }}</td>
+            <td>{{ reviews }}</td>
             <td>{{ patch_set_count }}</td>
             <td>{{ marks | format_mark }}</td>
             <td>{{ drafted_blueprint_count }}</td>
