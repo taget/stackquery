@@ -76,10 +76,9 @@ def get_status_from_users(users, company, project_type,
                           release, module=None, start_date="", end_date=""):
     """Return list of users from stackalytics"""
     parameters = {
-        'project_type': project_type,
-        'company': company,
-        'metric': 'commits',
-        'release': release
+        'project_type': 'all',
+        'company': 'intel',
+        'release': 'all',
     }
     if len(start_date) > 0:
        parameters['start_date'] = date_time_to_utc_str(start_date)
