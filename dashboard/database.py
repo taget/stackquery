@@ -90,6 +90,18 @@ def init_db():
     db_session.add(release)
 
     release = models.Release()
+    release.name = 'Newton'
+    db_session.add(release)
+
+    release = models.Release()
+    release.name = 'Mitaka'
+    db_session.add(release)
+
+    release = models.Release()
+    release.name = 'Liberty'
+    db_session.add(release)
+
+    release = models.Release()
     release.name = 'Kilo'
     db_session.add(release)
 
