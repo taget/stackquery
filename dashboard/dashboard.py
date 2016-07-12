@@ -16,7 +16,8 @@ dashboard = Blueprint('dashboard', __name__)
 
 
 colums = ('commit_count', 'resolved_bug_count', 'reviews',
-          'drafted_blueprint_count', 'completed_blueprint_count', 'loc')
+          'drafted_blueprint_count', 'completed_blueprint_count', 'loc',
+          'patch_set_count', 'change_request_count')
 
 marks_name = ('A', '-2', '1', '0', '2','-1')
 

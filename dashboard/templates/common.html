@@ -12,6 +12,8 @@
             <td>Total LOC</td>
             <td>Draft Blueprints</td>
             <td>Completed Blueprints</td>
+            <td>Patch Set Count</td>
+            <td>Change Request Count</td>
             <td>Resolved Bugs</td>
         </tr>
     </thead>
@@ -24,6 +26,8 @@
         {% set loc = user.get('loc') %}
         {% set drafted_blueprint_count = user.get('drafted_blueprint_count') %}
         {% set completed_blueprint_count = user.get('completed_blueprint_count') %}
+        {% set patch_set_count = user.get('patch_set_count') %}
+        {% set change_request_count = user.get('change_request_count') %}
         {% set resolved_bug_count = user.get('resolved_bug_count') %}
         <tr>
             <td>{{ user_name }}</td>
@@ -32,6 +36,8 @@
             <td>{{ loc }}</td>
             <td>{{ drafted_blueprint_count }}</td>
             <td>{{ completed_blueprint_count }}</td>
+            <td>{{ patch_set_count }}</td>
+            <td>{{ change_request_count }}</td>
             <td>{{ resolved_bug_count }}</td>
         </tr>
     {% endfor %}
